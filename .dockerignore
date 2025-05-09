@@ -4,3 +4,4 @@ build/
 *.a
 *.pyc
 __pycache__/
+compile/

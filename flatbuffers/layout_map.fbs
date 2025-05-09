@@ -1,0 +1,30 @@
+namespace Layout;
+
+enum FieldType : byte {
+  Int32,
+  Int64,
+  Float32,
+  Float64,
+  String,
+  Object,
+  Array
+}
+
+table Field {
+  name: string;
+  type: FieldType;
+  offset: uint32;
+  size: uint32;
+  count_offset: uint32;
+  stride: uint32;
+  max_items: uint32;
+  has_used_flag: bool;
+  children: [Field];
+}
+
+table LayoutMap {
+  total_size: uint32;
+  fields: [Field];
+}
+
+root_type LayoutMap;

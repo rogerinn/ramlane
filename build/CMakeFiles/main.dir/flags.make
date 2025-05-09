@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/rogerinn/dev/ramlane/include
+CXX_INCLUDES = -I/home/rogerinn/dev/ramlane/include -I/home/rogerinn/dev/ramlane/flatbuffers
 
 CXX_FLAGS = -g -std=gnu++17
 

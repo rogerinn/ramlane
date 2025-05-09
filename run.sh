@@ -29,5 +29,5 @@ cmake --build build
 
 echo -e "\n${GREEN}[+] Executando a aplicação...${RESET}"
 echo
-./build/main /var/run/engine/layout.buf
+./build/main layout.json /var/run/engine/layout.buf ./compile/layout.ram ./compile/
 

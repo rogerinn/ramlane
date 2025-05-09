@@ -33,22 +33,27 @@ struct LayoutMap {
 
 class LayoutEngine {
 public:
-    LayoutEngine(const nlohmann::json& layout);
+    LayoutEngine() = default;
 
+    void load_layout_json(const std::string& path);
+    void load_map_flatbuf(const std::string& path);
+    void save_map_flatbuf(const std::string& path);
+
+    void allocate_memory_from_file(const std::string& path);
     void* mmap_base();
     size_t mmap_size() const;
+
+    void generate_ffi_header(const std::string& output_path);
+    void generate_ffi_cpp(const std::string& output_path);
 
     void insert(const std::string& field, const void* item);
     void pop(const std::string& field, size_t index);
     void* get(const std::string& field, size_t index = 0);
 
-    void allocate_memory_from_file(const std::string& path);
-
 private:
+    void build_layout(const nlohmann::json& layout);
+
     LayoutMap map_;
     void* base_ptr_ = nullptr;
     size_t size_ = 0;
-
-    void build_layout(const nlohmann::json& layout);
-    void allocate_memory();
 };

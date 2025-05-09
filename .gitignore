@@ -1,0 +1,27 @@
+# Build artifacts
+/build/
+/compile/
+CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+compile_commands.json
+/cache/
+# FlatBuffers
+*_generated.h
+
+# tmpfs artifacts (if copied)
+layout.buf
+layout.ram
+
+# Binaries
+main
+*.so
+*.o
+*.out
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*~

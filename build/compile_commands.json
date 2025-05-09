@@ -1,13 +1,13 @@
 [
 {
   "directory": "/home/rogerinn/dev/ramlane/build",
-  "command": "/usr/bin/c++  -I/home/rogerinn/dev/ramlane/include -g -std=gnu++17 -o CMakeFiles/main.dir/main.cpp.o -c /home/rogerinn/dev/ramlane/main.cpp",
+  "command": "/usr/bin/c++  -I/home/rogerinn/dev/ramlane/include -I/home/rogerinn/dev/ramlane/flatbuffers -g -std=gnu++17 -o CMakeFiles/main.dir/main.cpp.o -c /home/rogerinn/dev/ramlane/main.cpp",
   "file": "/home/rogerinn/dev/ramlane/main.cpp",
   "output": "CMakeFiles/main.dir/main.cpp.o"
 },
 {
   "directory": "/home/rogerinn/dev/ramlane/build",
-  "command": "/usr/bin/c++  -I/home/rogerinn/dev/ramlane/include -g -std=gnu++17 -o CMakeFiles/main.dir/src/layout_engine.cpp.o -c /home/rogerinn/dev/ramlane/src/layout_engine.cpp",
+  "command": "/usr/bin/c++  -I/home/rogerinn/dev/ramlane/include -I/home/rogerinn/dev/ramlane/flatbuffers -g -std=gnu++17 -o CMakeFiles/main.dir/src/layout_engine.cpp.o -c /home/rogerinn/dev/ramlane/src/layout_engine.cpp",
   "file": "/home/rogerinn/dev/ramlane/src/layout_engine.cpp",
   "output": "CMakeFiles/main.dir/src/layout_engine.cpp.o"
 }

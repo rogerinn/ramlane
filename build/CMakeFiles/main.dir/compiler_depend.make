@@ -208,7 +208,6 @@ CMakeFiles/main.dir/main.cpp.o: /home/rogerinn/dev/ramlane/main.cpp \
   /usr/include/c++/14.2.1/cassert \
   /usr/include/c++/14.2.1/cctype \
   /usr/include/c++/14.2.1/cerrno \
-  /usr/include/c++/14.2.1/chrono \
   /usr/include/c++/14.2.1/clocale \
   /usr/include/c++/14.2.1/cmath \
   /usr/include/c++/14.2.1/codecvt \
@@ -334,6 +333,7 @@ CMakeFiles/main.dir/main.cpp.o: /home/rogerinn/dev/ramlane/main.cpp \
 
 CMakeFiles/main.dir/src/layout_engine.cpp.o: /home/rogerinn/dev/ramlane/src/layout_engine.cpp \
   /home/rogerinn/dev/ramlane/include/layout_engine.hpp \
+  /home/rogerinn/dev/ramlane/include/layout_map_generated.h \
   /home/rogerinn/dev/ramlane/include/nlohmann/json.hpp \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
@@ -460,6 +460,7 @@ CMakeFiles/main.dir/src/layout_engine.cpp.o: /home/rogerinn/dev/ramlane/src/layo
   /usr/include/c++/14.2.1/bits/cpp_type_traits.h \
   /usr/include/c++/14.2.1/bits/cxxabi_forced.h \
   /usr/include/c++/14.2.1/bits/cxxabi_init_exception.h \
+  /usr/include/c++/14.2.1/bits/deque.tcc \
   /usr/include/c++/14.2.1/bits/enable_special_members.h \
   /usr/include/c++/14.2.1/bits/erase_if.h \
   /usr/include/c++/14.2.1/bits/exception.h \
@@ -471,6 +472,7 @@ CMakeFiles/main.dir/src/layout_engine.cpp.o: /home/rogerinn/dev/ramlane/src/layo
   /usr/include/c++/14.2.1/bits/fs_fwd.h \
   /usr/include/c++/14.2.1/bits/fs_ops.h \
   /usr/include/c++/14.2.1/bits/fs_path.h \
+  /usr/include/c++/14.2.1/bits/fstream.tcc \
   /usr/include/c++/14.2.1/bits/functexcept.h \
   /usr/include/c++/14.2.1/bits/functional_hash.h \
   /usr/include/c++/14.2.1/bits/gslice.h \
@@ -506,6 +508,18 @@ CMakeFiles/main.dir/src/layout_engine.cpp.o: /home/rogerinn/dev/ramlane/src/layo
   /usr/include/c++/14.2.1/bits/quoted_string.h \
   /usr/include/c++/14.2.1/bits/range_access.h \
   /usr/include/c++/14.2.1/bits/refwrap.h \
+  /usr/include/c++/14.2.1/bits/regex.h \
+  /usr/include/c++/14.2.1/bits/regex.tcc \
+  /usr/include/c++/14.2.1/bits/regex_automaton.h \
+  /usr/include/c++/14.2.1/bits/regex_automaton.tcc \
+  /usr/include/c++/14.2.1/bits/regex_compiler.h \
+  /usr/include/c++/14.2.1/bits/regex_compiler.tcc \
+  /usr/include/c++/14.2.1/bits/regex_constants.h \
+  /usr/include/c++/14.2.1/bits/regex_error.h \
+  /usr/include/c++/14.2.1/bits/regex_executor.h \
+  /usr/include/c++/14.2.1/bits/regex_executor.tcc \
+  /usr/include/c++/14.2.1/bits/regex_scanner.h \
+  /usr/include/c++/14.2.1/bits/regex_scanner.tcc \
   /usr/include/c++/14.2.1/bits/requires_hosted.h \
   /usr/include/c++/14.2.1/bits/shared_ptr.h \
   /usr/include/c++/14.2.1/bits/shared_ptr_atomic.h \
@@ -519,6 +533,7 @@ CMakeFiles/main.dir/src/layout_engine.cpp.o: /home/rogerinn/dev/ramlane/src/layo
   /usr/include/c++/14.2.1/bits/stl_algobase.h \
   /usr/include/c++/14.2.1/bits/stl_bvector.h \
   /usr/include/c++/14.2.1/bits/stl_construct.h \
+  /usr/include/c++/14.2.1/bits/stl_deque.h \
   /usr/include/c++/14.2.1/bits/stl_function.h \
   /usr/include/c++/14.2.1/bits/stl_heap.h \
   /usr/include/c++/14.2.1/bits/stl_iterator.h \
@@ -526,10 +541,13 @@ CMakeFiles/main.dir/src/layout_engine.cpp.o: /home/rogerinn/dev/ramlane/src/layo
   /usr/include/c++/14.2.1/bits/stl_iterator_base_types.h \
   /usr/include/c++/14.2.1/bits/stl_map.h \
   /usr/include/c++/14.2.1/bits/stl_multimap.h \
+  /usr/include/c++/14.2.1/bits/stl_multiset.h \
   /usr/include/c++/14.2.1/bits/stl_numeric.h \
   /usr/include/c++/14.2.1/bits/stl_pair.h \
   /usr/include/c++/14.2.1/bits/stl_raw_storage_iter.h \
   /usr/include/c++/14.2.1/bits/stl_relops.h \
+  /usr/include/c++/14.2.1/bits/stl_set.h \
+  /usr/include/c++/14.2.1/bits/stl_stack.h \
   /usr/include/c++/14.2.1/bits/stl_tempbuf.h \
   /usr/include/c++/14.2.1/bits/stl_tree.h \
   /usr/include/c++/14.2.1/bits/stl_uninitialized.h \
@@ -551,6 +569,7 @@ CMakeFiles/main.dir/src/layout_engine.cpp.o: /home/rogerinn/dev/ramlane/src/layo
   /usr/include/c++/14.2.1/bits/valarray_before.h \
   /usr/include/c++/14.2.1/bits/vector.tcc \
   /usr/include/c++/14.2.1/bits/version.h \
+  /usr/include/c++/14.2.1/bitset \
   /usr/include/c++/14.2.1/cassert \
   /usr/include/c++/14.2.1/cctype \
   /usr/include/c++/14.2.1/cerrno \
@@ -569,6 +588,7 @@ CMakeFiles/main.dir/src/layout_engine.cpp.o: /home/rogerinn/dev/ramlane/src/layo
   /usr/include/c++/14.2.1/cwctype \
   /usr/include/c++/14.2.1/debug/assertions.h \
   /usr/include/c++/14.2.1/debug/debug.h \
+  /usr/include/c++/14.2.1/deque \
   /usr/include/c++/14.2.1/exception \
   /usr/include/c++/14.2.1/ext/aligned_buffer.h \
   /usr/include/c++/14.2.1/ext/alloc_traits.h \
@@ -579,6 +599,7 @@ CMakeFiles/main.dir/src/layout_engine.cpp.o: /home/rogerinn/dev/ramlane/src/layo
   /usr/include/c++/14.2.1/ext/type_traits.h \
   /usr/include/c++/14.2.1/filesystem \
   /usr/include/c++/14.2.1/forward_list \
+  /usr/include/c++/14.2.1/fstream \
   /usr/include/c++/14.2.1/functional \
   /usr/include/c++/14.2.1/initializer_list \
   /usr/include/c++/14.2.1/iomanip \
@@ -601,7 +622,10 @@ CMakeFiles/main.dir/src/layout_engine.cpp.o: /home/rogerinn/dev/ramlane/src/layo
   /usr/include/c++/14.2.1/pstl/glue_numeric_defs.h \
   /usr/include/c++/14.2.1/pstl/pstl_config.h \
   /usr/include/c++/14.2.1/ratio \
+  /usr/include/c++/14.2.1/regex \
+  /usr/include/c++/14.2.1/set \
   /usr/include/c++/14.2.1/sstream \
+  /usr/include/c++/14.2.1/stack \
   /usr/include/c++/14.2.1/stdexcept \
   /usr/include/c++/14.2.1/streambuf \
   /usr/include/c++/14.2.1/string \
@@ -628,8 +652,10 @@ CMakeFiles/main.dir/src/layout_engine.cpp.o: /home/rogerinn/dev/ramlane/src/layo
   /usr/include/c++/14.2.1/vector \
   /usr/include/c++/14.2.1/version \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
+  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/basic_file.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
+  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++io.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++locale.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
   /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/ctype_base.h \
@@ -646,6 +672,22 @@ CMakeFiles/main.dir/src/layout_engine.cpp.o: /home/rogerinn/dev/ramlane/src/layo
   /usr/include/fcntl.h \
   /usr/include/features-time64.h \
   /usr/include/features.h \
+  /usr/include/flatbuffers/allocator.h \
+  /usr/include/flatbuffers/array.h \
+  /usr/include/flatbuffers/base.h \
+  /usr/include/flatbuffers/buffer.h \
+  /usr/include/flatbuffers/buffer_ref.h \
+  /usr/include/flatbuffers/default_allocator.h \
+  /usr/include/flatbuffers/detached_buffer.h \
+  /usr/include/flatbuffers/flatbuffer_builder.h \
+  /usr/include/flatbuffers/flatbuffers.h \
+  /usr/include/flatbuffers/stl_emulation.h \
+  /usr/include/flatbuffers/string.h \
+  /usr/include/flatbuffers/struct.h \
+  /usr/include/flatbuffers/table.h \
+  /usr/include/flatbuffers/vector.h \
+  /usr/include/flatbuffers/vector_downward.h \
+  /usr/include/flatbuffers/verifier.h \
   /usr/include/gnu/stubs-64.h \
   /usr/include/gnu/stubs.h \
   /usr/include/libintl.h \
@@ -723,13 +765,59 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/include/linux/close_range.h:
 
+/usr/include/flatbuffers/vector_downward.h:
+
+/usr/include/flatbuffers/vector.h:
+
+/usr/include/flatbuffers/string.h:
+
+/usr/include/flatbuffers/stl_emulation.h:
+
+/usr/include/flatbuffers/flatbuffers.h:
+
+/usr/include/flatbuffers/detached_buffer.h:
+
+/usr/include/flatbuffers/default_allocator.h:
+
+/usr/include/flatbuffers/buffer_ref.h:
+
+/usr/include/flatbuffers/base.h:
+
+/usr/include/flatbuffers/allocator.h:
+
 /usr/include/fcntl.h:
+
+/usr/include/c++/14.2.1/regex:
+
+/usr/include/c++/14.2.1/deque:
+
+/usr/include/c++/14.2.1/bits/stl_set.h:
+
+/usr/include/c++/14.2.1/bits/stl_multiset.h:
+
+/usr/include/c++/14.2.1/bits/regex_executor.h:
+
+/usr/include/c++/14.2.1/bits/regex_compiler.tcc:
+
+/usr/include/c++/14.2.1/bits/regex_compiler.h:
+
+/usr/include/c++/14.2.1/bits/regex_automaton.tcc:
+
+/usr/include/c++/14.2.1/bits/stl_stack.h:
+
+/usr/include/c++/14.2.1/bits/regex.tcc:
+
+/usr/include/c++/14.2.1/bits/regex.h:
+
+/usr/include/c++/14.2.1/bits/deque.tcc:
 
 /usr/include/bits/struct_stat.h:
 
 /usr/include/bits/stat.h:
 
 /usr/include/bits/posix_opt.h:
+
+/usr/include/flatbuffers/verifier.h:
 
 /usr/include/bits/mman-shared.h:
 
@@ -827,8 +915,6 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/include/c++/14.2.1/streambuf:
 
-/usr/include/c++/14.2.1/stdexcept:
-
 /usr/include/c++/14.2.1/bits/gslice.h:
 
 /usr/include/c++/14.2.1/vector:
@@ -863,6 +949,8 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/include/bits/iscanonical.h:
 
+/usr/include/c++/14.2.1/bits/regex_scanner.h:
+
 /usr/include/c++/14.2.1/bits/stl_iterator.h:
 
 /usr/include/c++/14.2.1/bits/valarray_before.h:
@@ -893,6 +981,8 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/include/bits/wordsize.h:
 
+/home/rogerinn/dev/ramlane/include/layout_map_generated.h:
+
 /usr/include/c++/14.2.1/ext/string_conversions.h:
 
 /usr/include/bits/wctype-wchar.h:
@@ -902,6 +992,8 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/include/bits/types/wint_t.h:
 
 /usr/include/c++/14.2.1/bits/basic_ios.h:
+
+/usr/include/flatbuffers/table.h:
 
 /usr/include/bits/types/struct_timespec.h:
 
@@ -951,9 +1043,13 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/include/c++/14.2.1/bits/exception_ptr.h:
 
+/usr/include/c++/14.2.1/bits/regex_executor.tcc:
+
 /usr/include/c++/14.2.1/bits/basic_string.h:
 
 /usr/lib/libc.so:
+
+/usr/include/flatbuffers/buffer.h:
 
 /usr/include/bits/pthreadtypes.h:
 
@@ -1015,9 +1111,13 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/include/bits/fp-logb.h:
 
+/usr/include/asm-generic/errno.h:
+
 /usr/include/bits/long-double.h:
 
 /usr/include/bits/mathcalls-macros.h:
+
+/usr/include/flatbuffers/flatbuffer_builder.h:
 
 /usr/include/asm-generic/int-ll64.h:
 
@@ -1032,6 +1132,8 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/include/bits/environments.h:
 
 /usr/include/bits/types/struct_FILE.h:
+
+/usr/include/c++/14.2.1/bits/regex_scanner.tcc:
 
 /usr/include/c++/14.2.1/initializer_list:
 
@@ -1063,11 +1165,15 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/include/asm-generic/types.h:
 
+/usr/include/c++/14.2.1/bitset:
+
 /usr/include/c++/14.2.1/tr1/hypergeometric.tcc:
 
 /usr/include/c++/14.2.1/bits/fstream.tcc:
 
 /usr/include/c++/14.2.1/bits/align.h:
+
+/usr/include/c++/14.2.1/bits/regex_error.h:
 
 /home/rogerinn/dev/ramlane/include/layout_engine.hpp:
 
@@ -1096,6 +1202,8 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/include/c++/14.2.1/ctime:
 
 /usr/include/bits/pthreadtypes-arch.h:
+
+/usr/include/c++/14.2.1/set:
 
 /usr/include/c++/14.2.1/filesystem:
 
@@ -1137,6 +1245,8 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/include/bits/types/cookie_io_functions_t.h:
 
+/usr/include/c++/14.2.1/bits/regex_constants.h:
+
 /usr/include/bits/types/struct_sched_param.h:
 
 /usr/include/c++/14.2.1/bits/stl_uninitialized.h:
@@ -1152,6 +1262,8 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/include/c++/14.2.1/pstl/glue_algorithm_defs.h:
 
 /usr/include/bits/types/time_t.h:
+
+/usr/include/c++/14.2.1/stdexcept:
 
 /usr/include/bits/mathcalls-helper-functions.h:
 
@@ -1183,6 +1295,8 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/include/c++/14.2.1/bits/hashtable_policy.h:
 
+/usr/include/c++/14.2.1/stack:
+
 /usr/include/bits/setjmp.h:
 
 /usr/include/c++/14.2.1/bits/charconv.h:
@@ -1198,6 +1312,8 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/include/c++/14.2.1/bits/stl_construct.h:
 
 /usr/include/c++/14.2.1/ext/atomicity.h:
+
+/usr/include/c++/14.2.1/bits/stl_deque.h:
 
 /usr/include/c++/14.2.1/bits/hash_bytes.h:
 
@@ -1301,7 +1417,11 @@ CMakeFiles/main.dir/main.cpp.o:
 
 /usr/include/c++/14.2.1/bits/stl_algo.h:
 
+/usr/include/flatbuffers/struct.h:
+
 /usr/include/c++/14.2.1/compare:
+
+/usr/include/c++/14.2.1/bits/regex_automaton.h:
 
 /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h:
 
@@ -1328,6 +1448,8 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/include/c++/14.2.1/bits/forward_list.tcc:
 
 /usr/include/c++/14.2.1/bits/stl_relops.h:
+
+/usr/include/flatbuffers/array.h:
 
 /usr/include/c++/14.2.1/bits/stl_vector.h:
 
@@ -1368,12 +1490,6 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/include/c++/14.2.1/bits/vector.tcc:
 
 /usr/include/c++/14.2.1/cstddef:
-
-/usr/include/asm-generic/errno.h:
-
-/usr/include/c++/14.2.1/chrono:
-
-/usr/include/c++/14.2.1/memory:
 
 /usr/include/wchar.h:
 
@@ -1424,6 +1540,8 @@ CMakeFiles/main.dir/main.cpp.o:
 /usr/include/bits/getopt_core.h:
 
 /usr/include/c++/14.2.1/locale:
+
+/usr/include/c++/14.2.1/memory:
 
 /usr/include/c++/14.2.1/optional:
 
