@@ -1,0 +1,3 @@
+/home/rogerinn/dev/ramlane/build/CMakeFiles/main.dir
+/home/rogerinn/dev/ramlane/build/CMakeFiles/edit_cache.dir
+/home/rogerinn/dev/ramlane/build/CMakeFiles/rebuild_cache.dir
