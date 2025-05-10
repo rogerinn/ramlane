@@ -29,5 +29,10 @@ cmake --build build
 
 echo -e "\n${GREEN}[+] Executando a aplicação...${RESET}"
 echo
-./build/main layout.json /var/run/engine/layout.buf ./compile/layout.ram ./compile/
+./build/main \
+  --input layout.json \
+  --backing-file /var/run/engine/layout.buf \
+  --flatbuffer ./compile/layout.ram \
+  --out-dir ./compile/
+
 
