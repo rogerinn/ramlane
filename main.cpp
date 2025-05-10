@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
     // Gera os arquivos de FFI
     engine.generate_ffi_header(output_dir + "/layout_ffi.hpp");
     engine.generate_ffi_cpp(output_dir + "/layout_ffi.cpp");
-
+    engine.validate_and_format("./compile/layout_ffi.hpp","./compile/layout_ffi.cpp");
     std::cout << "Total buffer size: " << engine.mmap_size()
               << " bytes (" << engine.mmap_size() / 1024.0 << " KB, "
               << engine.mmap_size() / (1024.0 * 1024.0) << " MB)\n";
