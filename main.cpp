@@ -1,6 +1,5 @@
 #include <layout_engine.hpp>
 #include <nlohmann/json.hpp>
-#include <fstream>
 #include <iostream>
 
 int main(int argc, char* argv[]) {
@@ -18,10 +17,8 @@ int main(int argc, char* argv[]) {
     engine.load_layout_json(json_path);
     engine.allocate_memory_from_file(ram_path);
 
-    // Salva o .ram (FlatBuffers)
     engine.save_map_flatbuf(ram_map);
 
-    // Gera os arquivos de FFI
     engine.generate_ffi_header(output_dir + "/layout_ffi.hpp");
     engine.generate_ffi_cpp(output_dir + "/layout_ffi.cpp");
     engine.validate_and_format("./compile/layout_ffi.hpp","./compile/layout_ffi.cpp");
