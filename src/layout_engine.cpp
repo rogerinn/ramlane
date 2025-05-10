@@ -243,20 +243,73 @@ void *LayoutEngine::get(const std::string &f, size_t idx) {
 // -------------------------------
 void LayoutEngine::generate_ffi_header(const std::string &out_path) {
   std::ofstream out(out_path);
-  out << "#pragma once\n#include <cstddef>\n\n"
-         "extern \"C\" {\n\n"
-         "void init_layout_buffer(const char* path);\n\n";
+  if (!out)
+    throw std::runtime_error("Não foi possível abrir " + out_path);
 
-  // struct definitions
+  // 1) Guard e includes básicos
+  out << "#pragma once\n"
+         "#include <cstddef>\n"
+         "#include <cstdint>\n\n";
+
+  // 2) OFFSET_TOTAL_SIZE
+  out << "// Tamanho total do buffer (gerado pelo LayoutEngine)\n"
+         "constexpr std::size_t OFFSET_TOTAL_SIZE = "
+      << map_.total_size << ";\n\n";
+
+  // 3) Geração de OFFSET_<campo> e STRIDE_<array>
+  out << "// Offsets e strides gerados\n";
+  for (auto const &fld : map_.fields) {
+    switch (fld.type) {
+    // campos simples
+    case FieldType::Int32:
+    case FieldType::Int64:
+    case FieldType::Float32:
+    case FieldType::Float64:
+    case FieldType::String:
+      out << "constexpr std::size_t OFFSET_" << fld.name << " = " << fld.offset
+          << ";\n";
+      if (fld.type == FieldType::String) {
+        out << "constexpr std::size_t " << fld.name
+            << "_MAX_LEN = " << fld.max_length << ";\n";
+      }
+      break;
+
+    // arrays de objetos
+    case FieldType::Array:
+      out << "constexpr std::size_t OFFSET_" << fld.name
+          << "_count = " << fld.count_offset << ";\n";
+      out << "constexpr std::size_t OFFSET_" << fld.name
+          << "_base  = " << (fld.offset + 4) << ";\n";
+      out << "constexpr std::size_t STRIDE_" << fld.name << "     = "
+          << fld.item_stride << ";\n";
+      for (auto const &ch : fld.children) {
+        out << "constexpr std::size_t OFFSET_" << fld.name << "_" << ch.name
+            << " = " << (ch.offset + (fld.has_used_flag ? 1 : 0)) << ";\n";
+      }
+      break;
+
+    default:
+      break;
+    }
+  }
+  out << "\n";
+
+  // 4) Começa bloc o extern "C"
+  out << "extern \"C\" {\n\n";
+
+  // 5) init
+  out << "void init_layout_buffer(const char* path);\n\n";
+
+  // 6) Struct definitions
   for (auto const &fld : map_.fields) {
     if (fld.type == FieldType::Object) {
       out << "struct " << fld.name << " {\n";
       for (auto const &ch : fld.children) {
         if (ch.type == FieldType::Int32)
-          out << "  int " << ch.name << ";\n";
-        if (ch.type == FieldType::Float32)
-          out << "  float " << ch.name << ";\n";
-        if (ch.type == FieldType::Float64)
+          out << "  int    " << ch.name << ";\n";
+        else if (ch.type == FieldType::Float32)
+          out << "  float  " << ch.name << ";\n";
+        else if (ch.type == FieldType::Float64)
           out << "  double " << ch.name << ";\n";
       }
       out << "};\n\n";
@@ -265,34 +318,32 @@ void LayoutEngine::generate_ffi_header(const std::string &out_path) {
       out << "struct " << fld.name << " {\n";
       for (auto const &ch : fld.children) {
         if (ch.type == FieldType::Int32)
-          out << "  int " << ch.name << ";\n";
-        if (ch.type == FieldType::Float32)
-          out << "  float " << ch.name << ";\n";
-        if (ch.type == FieldType::Float64)
+          out << "  int    " << ch.name << ";\n";
+        else if (ch.type == FieldType::Float32)
+          out << "  float  " << ch.name << ";\n";
+        else if (ch.type == FieldType::Float64)
           out << "  double " << ch.name << ";\n";
       }
       out << "};\n\n";
     }
   }
 
-  // root_layout
+  // 7) root_layout
   out << "struct root_layout {\n";
   for (auto const &fld : map_.fields) {
     switch (fld.type) {
     case FieldType::Int32:
-      out << "  int " << fld.name << ";\n";
-      break;
     case FieldType::Int64:
-      out << "  int " << fld.name << ";\n";
+      out << "  int    " << fld.name << ";\n";
       break;
     case FieldType::Float32:
-      out << "  float " << fld.name << ";\n";
+      out << "  float  " << fld.name << ";\n";
       break;
     case FieldType::Float64:
       out << "  double " << fld.name << ";\n";
       break;
     case FieldType::String:
-      out << "  char " << fld.name << "[" << fld.max_length << "];\n";
+      out << "  char   " << fld.name << "[" << fld.max_length << "];\n";
       break;
     case FieldType::Object:
       out << "  struct " << fld.name << " " << fld.name << ";\n";
@@ -301,64 +352,84 @@ void LayoutEngine::generate_ffi_header(const std::string &out_path) {
       out << "  struct " << fld.name << " " << fld.name << "[" << fld.max_items
           << "];\n";
       break;
+    default:
+      break;
     }
   }
   out << "};\n\n";
 
-  // funções FFI
+  // 8) Assinaturas FFI
   for (auto const &fld : map_.fields) {
-    // tipo raiz
+    // simples
     if (fld.type == FieldType::Int32) {
-      out << "int get_" << fld.name << "();\n";
-      out << "void set_" << fld.name << "(int value);\n\n";
+      out << "int    get_" << fld.name
+          << "();\n"
+             "void   set_"
+          << fld.name << "(int value);\n\n";
     }
     if (fld.type == FieldType::Float32) {
-      out << "float get_" << fld.name << "();\n";
-      out << "void set_" << fld.name << "(float value);\n\n";
+      out << "float  get_" << fld.name
+          << "();\n"
+             "void   set_"
+          << fld.name << "(float value);\n\n";
     }
     if (fld.type == FieldType::Float64) {
-      out << "double get_" << fld.name << "();\n";
-      out << "void set_" << fld.name << "(double value);\n\n";
+      out << "double get_" << fld.name
+          << "();\n"
+             "void   set_"
+          << fld.name << "(double value);\n\n";
     }
     if (fld.type == FieldType::String) {
-      out << "const char* get_" << fld.name << "();\n";
-      out << "void set_" << fld.name << "(const char* value);\n\n";
+      out << "const char* get_" << fld.name
+          << "();\n"
+             "void         set_"
+          << fld.name << "(const char* value);\n\n";
     }
+
+    // sub-objetos
     if (fld.type == FieldType::Object) {
       for (auto const &ch : fld.children) {
         std::string nm = fld.name + "_" + ch.name;
         if (ch.type == FieldType::Int32)
-          out << "int get_" << nm << "(); void set_" << nm << "(int);\n";
-        if (ch.type == FieldType::Float32)
-          out << "float get_" << nm << "(); void set_" << nm << "(float);\n";
-        if (ch.type == FieldType::Float64)
+          out << "int    get_" << nm << "(); void set_" << nm << "(int);\n";
+        else if (ch.type == FieldType::Float32)
+          out << "float  get_" << nm << "(); void set_" << nm << "(float);\n";
+        else if (ch.type == FieldType::Float64)
           out << "double get_" << nm << "(); void set_" << nm << "(double);\n";
       }
       out << "\n";
     }
+
+    // arrays
     if (fld.type == FieldType::Array) {
-      out << "std::size_t get_" << fld.name << "_count();\n";
-      out << "void set_" << fld.name << "_count(std::size_t count);\n\n";
+      out << "std::size_t get_" << fld.name
+          << "_count();\n"
+             "void        set_"
+          << fld.name << "_count(std::size_t count);\n\n";
       for (auto const &ch : fld.children) {
         std::string nm = fld.name + "_" + ch.name;
-        std::string t;
-        if (ch.type == FieldType::Int32)
-          t = "int";
-        if (ch.type == FieldType::Float32)
-          t = "float";
-        if (ch.type == FieldType::Float64)
-          t = "double";
-        out << t << " get_" << nm << "(std::size_t index);\n";
-        out << "void set_" << nm << "(std::size_t index, " << t
-            << " value);\n\n";
+        std::string tp = (ch.type == FieldType::Int32     ? "int"
+                          : ch.type == FieldType::Float32 ? "float"
+                                                          : "double");
+        out << tp << " get_" << nm
+            << "(std::size_t index);\n"
+               "void set_"
+            << nm << "(std::size_t index, " << tp << " value);\n\n";
       }
-      out << "void pop_" << fld.name << "(std::size_t index);\n\n";
-      out << "struct " << fld.name << " get_" << fld.name
-          << "_item(std::size_t index);\n\n";
+      out << "void        pop_" << fld.name
+          << "(std::size_t index);\n\n"
+             "struct "
+          << fld.name << " get_" << fld.name
+          << "_item(std::size_t index);\n\n"
+             "void        get_"
+          << fld.name << "_items(std::size_t start, std::size_t count, struct "
+          << fld.name << "* out_buffer);\n\n";
     }
   }
 
+  // 9) fecha extern C
   out << "}\n";
+  out.close();
 }
 
 // -------------------------------
