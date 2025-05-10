@@ -1,6 +1,7 @@
 # Build artifacts
+build/*
 /build/
-/compile/
+compile/
 CMakeFiles/
 CMakeCache.txt
 Makefile
