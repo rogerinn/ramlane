@@ -10,7 +10,7 @@ compile_commands.json
 /cache/
 # FlatBuffers
 *_generated.h
-
+.cache/
 # tmpfs artifacts (if copied)
 layout.buf
 layout.ram
