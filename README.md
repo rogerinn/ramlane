@@ -213,12 +213,6 @@ O repositório inclui um script `run.sh` para simplificar build e execução:
 #!/bin/bash
 set -e
 
-GREEN="[0;32m"
-YELLOW="[0;33m"
-BLUE="[0;34m"
-RED="[0;31m"
-RESET="[0m"
-
 trap on_exit EXIT
 
 on_exit() {
