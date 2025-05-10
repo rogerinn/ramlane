@@ -206,6 +206,7 @@ void LayoutEngine::insert(const std::string &field_name, const void *item) {
          fld.item_stride - (fld.has_used_flag ? 1 : 0));
   (*cnt)++;
 }
+
 void LayoutEngine::pop(const std::string &f, size_t idx) {
   auto const &fld = map_.fields[map_.field_index.at(f)];
   if (fld.type != FieldType::Array)
@@ -218,6 +219,7 @@ void LayoutEngine::pop(const std::string &f, size_t idx) {
   if (fld.has_used_flag)
     *((char *)base_ptr_ + base) = 0;
 }
+
 void *LayoutEngine::get(const std::string &f, size_t idx) {
   auto const &fld = map_.fields[map_.field_index.at(f)];
   if (fld.type == FieldType::Array) {
@@ -280,6 +282,9 @@ void LayoutEngine::generate_ffi_header(const std::string &out_path) {
     case FieldType::Int32:
       out << "  int " << fld.name << ";\n";
       break;
+    case FieldType::Int64:
+      out << "  int " << fld.name << ";\n";
+      break;
     case FieldType::Float32:
       out << "  float " << fld.name << ";\n";
       break;
@@ -334,7 +339,6 @@ void LayoutEngine::generate_ffi_header(const std::string &out_path) {
     if (fld.type == FieldType::Array) {
       out << "std::size_t get_" << fld.name << "_count();\n";
       out << "void set_" << fld.name << "_count(std::size_t count);\n\n";
-      // child access
       for (auto const &ch : fld.children) {
         std::string nm = fld.name + "_" + ch.name;
         std::string t;
@@ -348,9 +352,7 @@ void LayoutEngine::generate_ffi_header(const std::string &out_path) {
         out << "void set_" << nm << "(std::size_t index, " << t
             << " value);\n\n";
       }
-      // pop
       out << "void pop_" << fld.name << "(std::size_t index);\n\n";
-      // item
       out << "struct " << fld.name << " get_" << fld.name
           << "_item(std::size_t index);\n\n";
     }
@@ -452,7 +454,7 @@ void LayoutEngine::generate_ffi_cpp(const std::string &out_path) {
           << "() { return *reinterpret_cast<int*>((char*)base_ptr + OFFSET_"
           << nm << "); }\n\n";
     }
-    // void set_X(int);
+    // void set_X(int value);
     else if (std::regex_match(d, m,
                               std::regex(R"(void set_(\w+)\(int value\);)"))) {
       auto nm = m[1];
@@ -467,7 +469,7 @@ void LayoutEngine::generate_ffi_cpp(const std::string &out_path) {
           << "() { return *reinterpret_cast<float*>((char*)base_ptr + OFFSET_"
           << nm << "); }\n\n";
     }
-    // void set_X(float);
+    // void set_X(float value);
     else if (std::regex_match(
                  d, m, std::regex(R"(void set_(\w+)\(float value\);)"))) {
       auto nm = m[1];
@@ -482,7 +484,7 @@ void LayoutEngine::generate_ffi_cpp(const std::string &out_path) {
           << "() { return *reinterpret_cast<double*>((char*)base_ptr + OFFSET_"
           << nm << "); }\n\n";
     }
-    // void set_X(double);
+    // void set_X(double value);
     else if (std::regex_match(
                  d, m, std::regex(R"(void set_(\w+)\(double value\);)"))) {
       auto nm = m[1];
@@ -499,7 +501,7 @@ void LayoutEngine::generate_ffi_cpp(const std::string &out_path) {
              "OFFSET_"
           << nm << "); }\n\n";
     }
-    // void set_X(const char*);
+    // void set_X(const char* value);
     else if (std::regex_match(
                  d, m,
                  std::regex(R"(void set_(\w+)\(const char\* value\);)"))) {
@@ -517,7 +519,7 @@ void LayoutEngine::generate_ffi_cpp(const std::string &out_path) {
              "OFFSET_"
           << nm << "_count); }\n\n";
     }
-    // void set_arr_count(std::size_t);
+    // void set_arr_count(std::size_t count);
     else if (std::regex_match(
                  d, m,
                  std::regex(R"(void set_(\w+)_count\(std::size_t count\);)"))) {
@@ -527,7 +529,7 @@ void LayoutEngine::generate_ffi_cpp(const std::string &out_path) {
              "*reinterpret_cast<uint32_t*>((char*)base_ptr + OFFSET_"
           << nm << "_count) = static_cast<uint32_t>(c); }\n\n";
     }
-    // float get_arr_field(std::size_t);
+    // float get_arr_field(std::size_t index);
     else if (std::regex_match(
                  d, m,
                  std::regex(
@@ -539,7 +541,7 @@ void LayoutEngine::generate_ffi_cpp(const std::string &out_path) {
           << arr << "_base + i * STRIDE_" << arr << " + OFFSET_" << arr << "_"
           << fld_ch << "); }\n\n";
     }
-    // void set_arr_field(float);
+    // void set_arr_field(std::size_t index, float value);
     else if (
         std::regex_match(
             d, m,
@@ -552,7 +554,7 @@ void LayoutEngine::generate_ffi_cpp(const std::string &out_path) {
           << arr << "_base + i * STRIDE_" << arr << " + OFFSET_" << arr << "_"
           << fld_ch << ") = v; }\n\n";
     }
-    // double get_arr_field(std::size_t);
+    // double get_arr_field(std::size_t index);
     else if (std::regex_match(
                  d, m,
                  std::regex(
@@ -564,7 +566,7 @@ void LayoutEngine::generate_ffi_cpp(const std::string &out_path) {
           << arr << "_base + i * STRIDE_" << arr << " + OFFSET_" << arr << "_"
           << fld_ch << "); }\n\n";
     }
-    // void set_arr_field(double);
+    // void set_arr_field(std::size_t index, double value);
     else if (
         std::regex_match(
             d, m,
@@ -577,7 +579,7 @@ void LayoutEngine::generate_ffi_cpp(const std::string &out_path) {
           << arr << "_base + i * STRIDE_" << arr << " + OFFSET_" << arr << "_"
           << fld_ch << ") = v; }\n\n";
     }
-    // int get_arr_field(std::size_t);
+    // int get_arr_field(std::size_t index);
     else if (std::regex_match(
                  d, m,
                  std::regex(R"(int get_(\w+)_(\w+)\(std::size_t index\);)"))) {
@@ -588,7 +590,7 @@ void LayoutEngine::generate_ffi_cpp(const std::string &out_path) {
           << arr << "_base + i * STRIDE_" << arr << " + OFFSET_" << arr << "_"
           << fld_ch << "); }\n\n";
     }
-    // void set_arr_field(int);
+    // void set_arr_field(std::size_t index, int value);
     else if (
         std::regex_match(
             d, m,
@@ -601,7 +603,7 @@ void LayoutEngine::generate_ffi_cpp(const std::string &out_path) {
           << arr << "_base + i * STRIDE_" << arr << " + OFFSET_" << arr << "_"
           << fld_ch << ") = v; }\n\n";
     }
-    // void pop_arr(std::size_t);
+    // void pop_arr(std::size_t index);
     else if (std::regex_match(
                  d, m, std::regex(R"(void pop_(\w+)\(std::size_t index\);)"))) {
       auto arr = m[1];
@@ -609,19 +611,19 @@ void LayoutEngine::generate_ffi_cpp(const std::string &out_path) {
           << "(std::size_t i) { *((char*)base_ptr + OFFSET_" << arr
           << "_base + i * STRIDE_" << arr << ") = 0; }\n\n";
     }
-    // struct get_arr_item(std::size_t);
+    // struct get_arr_item(std::size_t index);
     else if (std::regex_match(
                  d, m,
                  std::regex(
                      R"(struct (\w+) get_(\w+)_item\(std::size_t index\);)"))) {
       auto st = m[1], arr = m[2];
       out << "struct " << st << " get_" << arr << "_item(std::size_t i) {\n";
-      out << "    struct " << st << " o;\n";
-      out << "    memcpy(&o, (char*)base_ptr + OFFSET_" << arr
+      out << "  struct " << st << " o;\n";
+      out << "  memcpy(&o, (char*)base_ptr + OFFSET_" << arr
           << "_base + i * STRIDE_" << arr << " + "
-          << (map_.fields[map_.field_index[arr]].has_used_flag ? "1" : "0")
+          << (map_.fields[map_.field_index[arr]].has_used_flag ? 1 : 0)
           << ", sizeof(o));\n";
-      out << "    return o;\n";
+      out << "  return o;\n";
       out << "}\n\n";
     }
   }

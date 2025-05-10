@@ -1,31 +1,30 @@
 {
-    "layout": {
-      "id": {
-        "type": "int32"
-      },
-      "name": {
-        "type": "string",
-        "max_length": 64
-      },
-      "balance": {
-        "type": "float64"
-      },
-      "config": {
-        "type": "object",
-        "schema": {
-          "active": "int32",
-          "threshold": "float32"
-        }
-      },
-      "orders": {
-        "type": "object[]",
-        "max_items": 100,
-        "schema": {
-          "price": "float64",
-          "amount": "float32",
-          "side": "int32"
-        }
+  "layout": {
+    "id": {
+      "type": "int32"
+    },
+    "name": {
+      "type": "string",
+      "max_length": 64
+    },
+    "balance": {
+      "type": "float64"
+    },
+    "config": {
+      "type": "object",
+      "schema": {
+        "active": "int32",
+        "threshold": "float32"
+      }
+    },
+    "orders": {
+      "type": "object[]",
+      "max_items": 100,
+      "schema": {
+        "price": "float64",
+        "amount": "float32",
+        "side": "int32"
       }
     }
   }
-  
+}
